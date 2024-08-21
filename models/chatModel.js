@@ -3,20 +3,23 @@ const { Schema, model } = mongoose;
 
 const chatSchema = new Schema(
   {
-    title: {
-      type: String,
+    // title: {
+    //   type: String,
 
-      required: [true, "Required"],
-    },
-    participants: {
+    //   required: [true, "Required"],
+    // },
+
+    participant: {
       type: Schema.Types.ObjectId,
-      ref: "User", // Ссылка на коллекцию Users
+      ref: "User",
       required: true,
     },
-    messages: {
-      type: Schema.Types.ObjectId,
-      ref: "Message",
-    },
+    messages: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Message",
+      },
+    ],
   },
   { versionKey: false, timestamps: true }
 );

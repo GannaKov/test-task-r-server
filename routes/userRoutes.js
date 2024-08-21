@@ -4,6 +4,8 @@ const { findUserById } = require("../middlewares/findUserById");
 
 //get all users
 userRouter.get("/", userCntrl.getAllUsers);
+//get all contacts (users with owner: false)
+userRouter.get("/contacts", userCntrl.getAllContacts);
 
 //get user by id
 userRouter.get("/:id", findUserById, userCntrl.getUserById);

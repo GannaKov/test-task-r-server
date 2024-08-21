@@ -15,6 +15,7 @@ const userSchema = new Schema(
       maxlength: [50, "Too Long!"],
       required: [true, "Required"],
     },
+    owner: { type: Boolean, default: false },
   },
   { versionKey: false, timestamps: true }
 );

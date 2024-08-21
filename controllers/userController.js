@@ -13,6 +13,19 @@ const getAllUsers = async (req, res, next) => {
     next(err);
   }
 };
+const getAllContacts = async (req, res, next) => {
+  try {
+    const result = await User.find({ owner: false });
+
+    if (result.length === 0) {
+      throw { status: 404, message: "No user found" };
+    }
+
+    res.status(200).json({ status: "success", code: 200, data: result });
+  } catch (err) {
+    next(err);
+  }
+};
 
 const getUserById = async (req, res, next) => {
   try {
@@ -52,11 +65,12 @@ const changeUser = async (req, res, next) => {
 
 const createUser = async (req, res, next) => {
   try {
-    const { firstName, lastName } = req.body;
+    const { firstName, lastName, owner } = req.body;
     //save
     const newUser = new User({
       lastName,
       firstName,
+      owner: owner !== undefined ? owner : false,
     });
     const result = await newUser.save();
     if (!result) {
@@ -69,4 +83,10 @@ const createUser = async (req, res, next) => {
   }
 };
 
-module.exports = { getUserById, getAllUsers, changeUser, createUser };
+module.exports = {
+  getUserById,
+  getAllUsers,
+  changeUser,
+  createUser,
+  getAllContacts,
+};
