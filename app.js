@@ -8,7 +8,6 @@ app.use(cors());
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json()); //!!!
-//const path = require('path');
 
 app.use("/api/users", userRouter);
 
@@ -21,7 +20,7 @@ app.use((err, req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  const { status = 500, message = "Server error " } = err;
+  const { status = 500, message = "Server Error " } = err;
 
   res.status(status).json({ message });
 });

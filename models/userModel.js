@@ -17,7 +17,6 @@ const userSchema = new Schema(
     },
   },
   { versionKey: false, timestamps: true }
-  //   { collection: "users" }
 );
 
 const User = model("User", userSchema);
