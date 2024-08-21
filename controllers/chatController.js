@@ -1,5 +1,6 @@
 const Chat = require("../models/chatModel");
 const User = require("../models/userModel");
+const Message = require("../models/messageModel");
 
 const getAllChats = async (req, res, next) => {
   try {
@@ -60,7 +61,13 @@ const getChatById = async (req, res, next) => {
 const deleteChat = async (req, res, next) => {
   try {
     const chat = req.chat;
+    const messageIds = chat.messages;
+    if (messageIds.length > 0) {
+      await Message.deleteMany({ _id: { $in: messageIds } });
+    }
+
     const result = await Chat.findByIdAndDelete(chat._id);
+    await User.findByIdAndUpdate(chat.participant, { $unset: { chatId: "" } });
 
     res
       .status(200)
