@@ -16,6 +16,10 @@ const userSchema = new Schema(
       required: [true, "Required"],
     },
     owner: { type: Boolean, default: false },
+    chatId: {
+      type: Schema.Types.ObjectId,
+      ref: "Chat",
+    },
   },
   { versionKey: false, timestamps: true }
 );

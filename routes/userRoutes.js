@@ -6,6 +6,8 @@ const { findUserById } = require("../middlewares/findUserById");
 userRouter.get("/", userCntrl.getAllUsers);
 //get all contacts (users with owner: false)
 userRouter.get("/contacts", userCntrl.getAllContacts);
+//get users without chat
+userRouter.get("/withoutchat", userCntrl.getUsersWithoutChat);
 
 //get user by id
 userRouter.get("/:id", findUserById, userCntrl.getUserById);

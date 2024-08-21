@@ -1,6 +1,7 @@
 const chatRouter = require("express").Router();
 const chatCntrl = require("../controllers/chatController");
 const { findChatById } = require("../middlewares/findChatById");
+const { findUserById } = require("../middlewares/findUserById");
 
 //get all chats
 chatRouter.get("/", chatCntrl.getAllChats);
@@ -9,7 +10,7 @@ chatRouter.get("/", chatCntrl.getAllChats);
 chatRouter.get("/:id", findChatById, chatCntrl.getChatById);
 
 //create chat
-chatRouter.post("/", chatCntrl.createChat);
+chatRouter.post("/:id", findUserById, chatCntrl.createChat); //here id - userId
 
 //delete chat
 chatRouter.delete("/:id", findChatById, chatCntrl.deleteChat);

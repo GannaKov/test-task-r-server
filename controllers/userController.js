@@ -36,6 +36,18 @@ const getUserById = async (req, res, next) => {
     next(err);
   }
 };
+const getUsersWithoutChat = async (req, res, next) => {
+  try {
+    const result = await User.find({
+      chatId: { $exists: false }, // or { $eq: null }
+      owner: false,
+    });
+
+    res.status(200).json({ status: "success", code: 200, data: result });
+  } catch (err) {
+    next(err);
+  }
+};
 
 const changeUser = async (req, res, next) => {
   try {
@@ -89,4 +101,5 @@ module.exports = {
   changeUser,
   createUser,
   getAllContacts,
+  getUsersWithoutChat,
 };

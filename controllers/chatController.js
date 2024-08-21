@@ -1,4 +1,5 @@
 const Chat = require("../models/chatModel");
+const User = require("../models/userModel");
 
 const getAllChats = async (req, res, next) => {
   try {
@@ -15,14 +16,30 @@ const getAllChats = async (req, res, next) => {
 
 const createChat = async (req, res, next) => {
   try {
-    const { participant } = req.body;
+    const user = req.user;
+    const userId = user._id;
+    // const { participant } = req.body;
+
+    // if chat already exists with the same participant
+    const existingChat = await Chat.findOne({ participant: userId });
+
+    if (existingChat) {
+      return res.status(200).json({
+        status: "Chat already exists",
+        code: 200,
+        data: existingChat,
+      });
+    }
+
+    //create new chat
 
     const newChat = new Chat({
       //   title,
-      participant,
+      participant: userId,
     });
 
     const result = await newChat.save();
+    await User.findByIdAndUpdate(userId, { chatId: result._id });
 
     res.status(201).json({ status: "Created", code: 201, data: result });
   } catch (err) {
