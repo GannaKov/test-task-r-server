@@ -30,7 +30,32 @@ const createChat = async (req, res, next) => {
   }
 };
 
+const getChatById = async (req, res, next) => {
+  try {
+    const chat = req.chat;
+
+    res.status(200).json({ status: "success", code: 200, data: chat });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const deleteChat = async (req, res, next) => {
+  try {
+    const chat = req.chat;
+    const result = await Chat.findByIdAndDelete(chat._id);
+
+    res
+      .status(200)
+      .json({ status: "success deleted", code: 200, data: result });
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   createChat,
   getAllChats,
+  getChatById,
+  deleteChat,
 };

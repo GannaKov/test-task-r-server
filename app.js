@@ -2,6 +2,8 @@ const express = require("express");
 
 const userRouter = require("./routes/userRoutes");
 const chatRouter = require("./routes/chatRoutes");
+const messageRouter = require("./routes/messageRoutes");
+
 require("dotenv").config();
 const cors = require("cors");
 const app = express();
@@ -12,6 +14,7 @@ app.use(express.json()); //!!!
 
 app.use("/api/users", userRouter);
 app.use("/api/chats", chatRouter);
+app.use("/api/message", messageRouter);
 
 app.use((err, req, res, next) => {
   if (err.status === 404) {
