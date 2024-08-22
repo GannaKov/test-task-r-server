@@ -26,7 +26,19 @@ const getAllContacts = async (req, res, next) => {
     next(err);
   }
 };
+const getCurrentUser = async (req, res, next) => {
+  try {
+    const result = await User.find({ owner: true });
 
+    if (!result) {
+      throw { status: 404, message: "No user found" };
+    }
+
+    res.status(200).json({ status: "success", code: 200, data: result[0] });
+  } catch (err) {
+    next(err);
+  }
+};
 const getUserById = async (req, res, next) => {
   try {
     const user = req.user;
@@ -40,6 +52,18 @@ const getUsersWithoutChat = async (req, res, next) => {
   try {
     const result = await User.find({
       chatId: { $exists: false }, // or { $eq: null }
+      owner: false,
+    });
+
+    res.status(200).json({ status: "success", code: 200, data: result });
+  } catch (err) {
+    next(err);
+  }
+};
+const getUsersWithChat = async (req, res, next) => {
+  try {
+    const result = await User.find({
+      chatId: { $exists: true, $ne: null }, // or { $eq: null }
       owner: false,
     });
 
@@ -102,4 +126,6 @@ module.exports = {
   createUser,
   getAllContacts,
   getUsersWithoutChat,
+  getUsersWithChat,
+  getCurrentUser,
 };

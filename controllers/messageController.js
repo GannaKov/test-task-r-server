@@ -22,7 +22,15 @@ const createMessage = async (req, res, next) => {
     next(err);
   }
 };
+const getMessageById = async (req, res, next) => {
+  try {
+    const message = req.message;
 
+    res.status(200).json({ status: "success", code: 200, data: message });
+  } catch (err) {
+    next(err);
+  }
+};
 const updateMessage = async (req, res, next) => {
   try {
     const message = req.message;
@@ -49,4 +57,5 @@ const updateMessage = async (req, res, next) => {
 module.exports = {
   createMessage,
   updateMessage,
+  getMessageById,
 };
