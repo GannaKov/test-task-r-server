@@ -1,10 +1,10 @@
 const Chat = require("../models/chatModel");
 
 const findChatById = async (req, res, next) => {
-  console.log("req.params", req.params);
+  //console.log("req.params", req.params);
   try {
     const chatId = req.params.id;
-    console.log("chatid", chatId);
+    //console.log("chatid", chatId);
     const chat = await Chat.findById(chatId);
 
     if (!chat) {
